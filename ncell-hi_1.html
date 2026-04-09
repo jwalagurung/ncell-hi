@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ncell-hi | नेपालको समाचार</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Source+Sans+3:wght@300;400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #c0392b;
+    --dark: #1a1a1a;
+    --mid: #333333;
+    --light: #f5f5f0;
+    --border: #e0ddd5;
+    --accent: #2c3e7a;
+    --text: #1a1a1a;
+    --text2: #555;
+    --white: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--light);
+    color: var(--text);
+    font-family: 'Source Sans 3', 'Noto Sans Devanagari', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  a { text-decoration: none; color: inherit; }
+
+  /* TOP BAR */
+  .top-bar {
+    background: var(--dark);
+    color: #aaa;
+    font-size: 11px;
+    padding: 6px 0;
+    border-bottom: 2px solid var(--red);
+  }
+  .top-bar .inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .top-bar .date { font-size: 11px; letter-spacing: 0.5px; }
+  .top-bar .links { display: flex; gap: 16px; }
+  .top-bar .links a { color: #aaa; font-size: 11px; }
+  .top-bar .links a:hover { color: #fff; }
+
+  /* HEADER */
+  header {
+    background: var(--white);
+    border-bottom: 3px solid var(--red);
+    padding: 20px 0 0;
+  }
+  .header-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  .logo-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .logo {
+    display: flex;
+    flex-direction: column;
+  }
+  .logo-main {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 900;
+    color: var(--red);
+    line-height: 1;
+    letter-spacing: -1px;
+  }
+  .logo-nepali {
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    font-size: 14px;
+    color: var(--text2);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .header-ad {
+    background: #f0f0f0;
+    border: 1px solid var(--border);
+    width: 300px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: #999;
+    letter-spacing: 1px;
+  }
+
+  /* NAV */
+  nav {
+    border-top: 1px solid var(--border);
+    background: var(--white);
+  }
+  .nav-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+  }
+  .nav-inner a {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 12px 16px;
+    color: var(--mid);
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .nav-inner a:hover { color: var(--red); }
+  .nav-inner a.active {
+    color: var(--red);
+    border-bottom-color: var(--red);
+  }
+
+  /* BREAKING NEWS */
+  .breaking {
+    background: var(--red);
+    color: white;
+    padding: 8px 0;
+    overflow: hidden;
+  }
+  .breaking-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .breaking-label {
+    background: var(--dark);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 3px 10px;
+    white-space: nowrap;
+  }
+  .breaking-text {
+    font-size: 13px;
+    font-family: 'Noto Sans Devanagari', sans-serif;
+    white-space: nowrap;
+    animation: scroll 30s linear infinite;
+  }
+  @keyframes scroll {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+  }
+
+  /* MAIN LAYOUT */
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* HERO SECTION */
+  .hero {
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+  }
+  .hero-main {
+    position: relative;
+    cursor: pointer;
+  }
+  .hero-img {
+    width: 100%;
+    height: 400px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    display: flex;
+    align-items: flex-end;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-img::before {
+    content: 'N';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Playfair Display', serif;
+    font-size: 280px;
+    font-weight: 900;
+    color: rgba(255,255,255,0.04);
+    line-height: 1;
+  }
+  .hero-img-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%);
+  }
+  .hero-img-content {
+    position: relative;
+    z-index: 1;
+  }
+  .hero-tag {
+    display: inline-block;
+    background: var(--red);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    margin-bottom: 10px;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+  .hero-meta {
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+  }
+
+  /* SIDE STORIES */
+  .side-stories {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .side-story {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+  }
+  .side-story:last-child { border-bottom: none; }
+  .side-story:hover .side-story-title { color: var(--red); }
+  .side-story-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 6px;
+    font-family: 'Noto Sans Devanagari', sans-serif;
+  }
+  .side-story-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--dark);
+    margin-bottom: 6px;
+    transition: color 0.2s;
+  }
+  .side-story-meta {
+    font-size: 11px;
+    color: var(--text2);
+  }
+
+  /* SECTION DIVIDER */
+  .section-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 28px 0 20px;
+  }
+  .section-head h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--dark);
+    white-space: nowrap;
+  }
+  .section-head::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background: var(--border);
+  }
+  .section-head .line {
+    width: 40px;
+    height: 3px;
+    background: var(--red);
+  }
+
+  /* MAIN CONTENT AREA */
+  .main-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 32px;
+    padding: 24px 0;
+  }
+
+  /* NEWS GRID */
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+  .news-card {
+    cursor: pointer;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 20px;
+  }
+  .news-card:hover .news-card-title { color: var(--red); }
+  .news-card-img {
+    width: 100%;
+    height: 160px;
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    color: rgba(255,255,255,0.1);
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+  }
+  .news-card-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 6px;
+    display: block;
+  }
+  .news-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--dark);
+    margin-bottom: 8px;
+    transition: color 0.2s;
+  }
+  .news-card-excerpt {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.6;
+    margin-bottom: 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .news-card-meta {
+    font-size: 11px;
+    color: #999;
+    display: flex;
+    gap: 10px;
+  }
+
+  /* SIDEBAR */
+  .sidebar { position: sticky; top: 20px; }
+
+  .sidebar-widget {
+    background: var(--white);
+    border: 1px solid var(--border);
+    margin-bottom: 24px;
+  }
+  .widget-head {
+    background: var(--dark);
+    color: white;
+    padding: 10px 16px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .widget-body { padding: 16px; }
+
+  .trending-list { list-style: none; }
+  .trending-item {
+    display: flex;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+  }
+  .trending-item:last-child { border-bottom: none; }
+  .trending-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--border);
+    line-height: 1;
+    min-width: 24px;
+  }
+  .trending-title {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--dark);
+    font-family: 'Noto Sans Devanagari', sans-serif;
+  }
+
+  .weather-widget { padding: 16px; }
+  .weather-city {
+    font-size: 13px;
+    color: var(--text2);
+    margin-bottom: 4px;
+    font-family: 'Noto Sans Devanagari', sans-serif;
+  }
+  .weather-temp {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--dark);
+    line-height: 1;
+  }
+  .weather-desc {
+    font-size: 13px;
+    color: var(--text2);
+    margin-top: 4px;
+    font-family: 'Noto Sans Devanagari', sans-serif;
+  }
+
+  /* OPINION SECTION */
+  .opinion-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .opinion-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    padding: 20px;
+    cursor: pointer;
+  }
+  .opinion-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .author-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+  }
+  .author-name {
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .author-title {
+    font-size: 11px;
+    color: var(--text2);
+  }
+  .opinion-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--dark);
+    border-left: 3px solid var(--red);
+    padding-left: 12px;
+    font-style: italic;
+  }
+
+  /* NEWSLETTER */
+  .newsletter {
+    background: var(--dark);
+    color: white;
+    padding: 40px;
+    text-align: center;
+    margin: 32px 0;
+  }
+  .newsletter h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+  .newsletter p {
+    color: #aaa;
+    font-size: 14px;
+    margin-bottom: 20px;
+    font-family: 'Noto Sans Devanagari', sans-serif;
+  }
+  .newsletter-form {
+    display: flex;
+    gap: 0;
+    max-width: 460px;
+    margin: 0 auto;
+  }
+  .newsletter-form input {
+    flex: 1;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-right: none;
+    color: white;
+    padding: 12px 16px;
+    font-size: 13px;
+    outline: none;
+  }
+  .newsletter-form input::placeholder { color: rgba(255,255,255,0.4); }
+  .newsletter-form button {
+    background: var(--red);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark);
+    color: #aaa;
+    padding: 40px 0 20px;
+    margin-top: 40px;
+  }
+  .footer-grid {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .footer-brand .logo-main { font-size: 36px; }
+  .footer-brand p {
+    font-size: 13px;
+    color: #888;
+    margin-top: 12px;
+    line-height: 1.7;
+    font-family: 'Noto Sans Devanagari', sans-serif;
+  }
+  .footer-col h5 {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: white;
+    margin-bottom: 16px;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 8px; }
+  .footer-col a {
+    font-size: 13px;
+    color: #888;
+    transition: color 0.2s;
+    font-family: 'Noto Sans Devanagari', sans-serif;
+  }
+  .footer-col a:hover { color: white; }
+  .footer-bottom {
+    max-width: 1280px;
+    margin: 20px auto 0;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #666;
+  }
+
+  /* MOBILE */
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .main-layout { grid-template-columns: 1fr; }
+    .news-grid { grid-template-columns: 1fr 1fr; }
+    .opinion-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .logo-main { font-size: 38px; }
+    .header-ad { display: none; }
+  }
+
+  @media (max-width: 600px) {
+    .news-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="inner">
+    <span class="date">बुधबार, चैत्र २७, २०८१ | Wednesday, April 9, 2025</span>
+    <div class="links">
+      <a href="#">E-Paper</a>
+      <a href="#">Photos</a>
+      <a href="#">Videos</a>
+      <a href="#">Login</a>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="logo-row">
+      <div class="logo">
+        <span class="logo-main">Ncell-hi</span>
+        <span class="logo-nepali">नेपालको आवाज • Voice of Nepal</span>
+      </div>
+      <div class="header-ad">ADVERTISEMENT</div>
+    </div>
+  </div>
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="active">गृहपृष्ठ</a>
+      <a href="#">राजनीति</a>
+      <a href="#">अर्थ</a>
+      <a href="#">खेलकुद</a>
+      <a href="#">प्रविधि</a>
+      <a href="#">स्वास्थ्य</a>
+      <a href="#">विश्व</a>
+      <a href="#">मनोरञ्जन</a>
+      <a href="#">Politics</a>
+      <a href="#">Economy</a>
+      <a href="#">Sports</a>
+      <a href="#">Tech</a>
+    </div>
+  </nav>
+</header>
+
+<!-- BREAKING NEWS -->
+<div class="breaking">
+  <div class="breaking-inner">
+    <span class="breaking-label">ब्रेकिङ</span>
+    <div style="overflow:hidden; flex:1;">
+      <span class="breaking-text">नेपाल सरकारले नयाँ बजेट घोषणा गर्ने • काठमाडौंमा तापक्रम बढ्दो • संसदमा महत्वपूर्ण विधेयक पारित • Nepal announces new infrastructure projects • Stock market hits record high</span>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="container">
+  <div class="hero">
+    <div class="hero-grid">
+      <div class="hero-main">
+        <div class="hero-img">
+          <div class="hero-img-overlay"></div>
+          <div class="hero-img-content">
+            <span class="hero-tag">मुख्य समाचार</span>
+            <h1 class="hero-title">नेपालको डिजिटल अर्थतन्त्र नयाँ उचाइमा — सरकारले ठूलो लगानीको घोषणा गर्यो</h1>
+            <div class="hero-meta">रामप्रसाद श्रेष्ठ • आज बिहान ९:३० बजे • ५ मिनेट पढ्न</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="side-stories">
+        <div class="side-story">
+          <span class="side-story-tag">राजनीति</span>
+          <div class="side-story-title">संसद् अधिवेशनमा विपक्षको कडा विरोध, हंगामा</div>
+          <div class="side-story-meta">२ घण्टा अगाडि • ३ मिनेट पढ्न</div>
+        </div>
+        <div class="side-story">
+          <span class="side-story-tag">खेलकुद</span>
+          <div class="side-story-title">नेपाली क्रिकेट टोलीको ऐतिहासिक जित, एसिया कपमा प्रवेश</div>
+          <div class="side-story-meta">३ घण्टा अगाडि • ४ मिनेट पढ्न</div>
+        </div>
+        <div class="side-story">
+          <span class="side-story-tag">Economy</span>
+          <div class="side-story-title">Remittance inflow reaches record $10 billion this fiscal year</div>
+          <div class="side-story-meta">4 hours ago • 5 min read</div>
+        </div>
+        <div class="side-story">
+          <span class="side-story-tag">प्रविधि</span>
+          <div class="side-story-title">नेपालमा ५G सेवा विस्तार — काठमाडौं उपत्यकामा पूर्ण कभरेज</div>
+          <div class="side-story-meta">५ घण्टा अगाडि • ३ मिनेट पढ्न</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="container">
+  <div class="main-layout">
+    <div>
+      <!-- LATEST NEWS -->
+      <div class="section-head">
+        <div class="line"></div>
+        <h2>ताजा समाचार | Latest News</h2>
+      </div>
+
+      <div class="news-grid">
+        <div class="news-card">
+          <div class="news-card-img" style="background: linear-gradient(135deg,#1a3a5c,#2980b9);">N</div>
+          <span class="news-card-tag">अर्थ</span>
+          <div class="news-card-title">नेपाल राष्ट्र बैंकले ब्याजदर घटायो — घर कर्जा सस्तो हुने</div>
+          <div class="news-card-excerpt">नेपाल राष्ट्र बैंकले नीतिगत ब्याजदरमा कटौती गर्दै गृह कर्जालाई थप सुलभ बनाउने निर्णय गरेको छ।</div>
+          <div class="news-card-meta"><span>अर्थ डेस्क</span><span>•</span><span>आज</span></div>
+        </div>
+
+        <div class="news-card">
+          <div class="news-card-img" style="background: linear-gradient(135deg,#1a5c3a,#27ae60);">N</div>
+          <span class="news-card-tag">Environment</span>
+          <div class="news-card-title">Nepal's Forest Cover Increases by 5% — Climate Goals on Track</div>
+          <div class="news-card-excerpt">A new government report reveals Nepal has successfully increased its forest cover, exceeding international climate commitments.</div>
+          <div class="news-card-meta"><span>Environment Desk</span><span>•</span><span>Today</span></div>
+        </div>
+
+        <div class="news-card">
+          <div class="news-card-img" style="background: linear-gradient(135deg,#5c1a1a,#c0392b);">N</div>
+          <span class="news-card-tag">स्वास्थ्य</span>
+          <div class="news-card-title">सरकारले सबै प्रदेशमा निःशुल्क स्वास्थ्य बीमा विस्तार गर्ने</div>
+          <div class="news-card-excerpt">स्वास्थ्य मन्त्रालयले आगामी आर्थिक वर्षदेखि सम्पूर्ण नागरिकलाई स्वास्थ्य बीमाको सुविधा दिने घोषणा गरेको छ।</div>
+          <div class="news-card-meta"><span>स्वास्थ्य डेस्क</span><span>•</span><span>आज</span></div>
+        </div>
+
+        <div class="news-card">
+          <div class="news-card-img" style="background: linear-gradient(135deg,#2c1a5c,#8e44ad);">N</div>
+          <span class="news-card-tag">Tech</span>
+          <div class="news-card-title">Kathmandu Startup Raises $5M Funding — Nepal's Tech Scene Booms</div>
+          <div class="news-card-excerpt">A Kathmandu-based fintech startup has secured major international investment, signaling growing confidence in Nepal's tech ecosystem.</div>
+          <div class="news-card-meta"><span>Tech Desk</span><span>•</span><span>Yesterday</span></div>
+        </div>
+
+        <div class="news-card">
+          <div class="news-card-img" style="background: linear-gradient(135deg,#3a3a1a,#d4ac0d);">N</div>
+          <span class="news-card-tag">शिक्षा</span>
+          <div class="news-card-title">नेपालको शिक्षा क्षेत्रमा ठूलो सुधार — डिजिटल कक्षाकोठा विस्तार</div>
+          <div class="news-card-excerpt">शिक्षा मन्त्रालयले सम्पूर्ण सरकारी विद्यालयमा डिजिटल पाठ्यक्रम लागू गर्ने महत्वाकांक्षी कार्यक्रम सुरु गरेको छ।</div>
+          <div class="news-card-meta"><span>शिक्षा डेस्क</span><span>•</span><span>हिजो</span></div>
+        </div>
+
+        <div class="news-card">
+          <div class="news-card-img" style="background: linear-gradient(135deg,#1a3a3a,#16a085);">N</div>
+          <span class="news-card-tag">Tourism</span>
+          <div class="news-card-title">Nepal Tourism Hits Record 1 Million Visitors in Q1 2025</div>
+          <div class="news-card-excerpt">Tourism arrivals have surged dramatically, with Everest Base Camp and Pokhara emerging as the top destinations.</div>
+          <div class="news-card-meta"><span>Tourism Desk</span><span>•</span><span>2 days ago</span></div>
+        </div>
+      </div>
+
+      <!-- OPINION -->
+      <div class="section-head">
+        <div class="line"></div>
+        <h2>विचार | Opinion</h2>
+      </div>
+      <div class="opinion-grid">
+        <div class="opinion-card">
+          <div class="opinion-author">
+            <div class="author-avatar">र</div>
+            <div>
+              <div class="author-name">रामचन्द्र पौडेल</div>
+              <div class="author-title">वरिष्ठ पत्रकार</div>
+            </div>
+          </div>
+          <div class="opinion-title">"नेपालको लोकतन्त्रलाई थप सुदृढ बनाउन राजनीतिक दलहरूले आफ्नो आन्तरिक सुधारमा ध्यान दिनुपर्छ।"</div>
+        </div>
+        <div class="opinion-card">
+          <div class="opinion-author">
+            <div class="author-avatar" style="background: var(--red);">S</div>
+            <div>
+              <div class="author-name">Sunita Sharma</div>
+              <div class="author-title">Economic Analyst</div>
+            </div>
+          </div>
+          <div class="opinion-title">"Nepal's economic potential remains untapped. It's time for bold reforms to attract foreign investment and create jobs."</div>
+        </div>
+      </div>
+
+      <!-- NEWSLETTER -->
+      <div class="newsletter">
+        <h3>हाम्रो न्यूजलेटर सब्स्क्राइब गर्नुस्</h3>
+        <p>दैनिक ताजा समाचार सिधै आफ्नो इमेलमा पाउनुस् • Get daily news in your inbox</p>
+        <div class="newsletter-form">
+          <input type="email" placeholder="तपाईंको इमेल • Your email">
+          <button>Subscribe</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="sidebar-widget">
+        <div class="widget-head">ट्रेन्डिङ | Trending</div>
+        <div class="widget-body">
+          <ul class="trending-list">
+            <li class="trending-item">
+              <span class="trending-num">01</span>
+              <span class="trending-title">नेपालमा विद्युत् निर्यात दोब्बर — भारतसँग नयाँ सम्झौता</span>
+            </li>
+            <li class="trending-item">
+              <span class="trending-num">02</span>
+              <span class="trending-title">काठमाडौं मेट्रो निर्माण सुरु हुने — सरकारको घोषणा</span>
+            </li>
+            <li class="trending-item">
+              <span class="trending-num">03</span>
+              <span class="trending-title">Nepal wins gold at South Asian Games 2025</span>
+            </li>
+            <li class="trending-item">
+              <span class="trending-num">04</span>
+              <span class="trending-title">पोखरा अन्तर्राष्ट्रिय विमानस्थलमा उडान बढ्यो</span>
+            </li>
+            <li class="trending-item">
+              <span class="trending-num">05</span>
+              <span class="trending-title">New education policy to make coding mandatory in schools</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="sidebar-widget">
+        <div class="widget-head">मौसम | Weather</div>
+        <div class="weather-widget">
+          <div class="weather-city">काठमाडौं • Kathmandu</div>
+          <div class="weather-temp">22°</div>
+          <div class="weather-desc">आंशिक बादल • Partly Cloudy</div>
+          <div style="margin-top: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 12px; color: var(--text2);">
+            <div>पोखरा: 24°</div>
+            <div>बुटवल: 28°</div>
+            <div>बिराटनगर: 26°</div>
+            <div>जनकपुर: 29°</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-widget">
+        <div class="widget-head">विषय | Topics</div>
+        <div class="widget-body">
+          <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+            <a href="#" style="background:#f0f0f0; padding:5px 12px; font-size:11px; font-weight:600; color:var(--dark); font-family:'Noto Sans Devanagari',sans-serif;">राजनीति</a>
+            <a href="#" style="background:#f0f0f0; padding:5px 12px; font-size:11px; font-weight:600; color:var(--dark);">Economy</a>
+            <a href="#" style="background:#f0f0f0; padding:5px 12px; font-size:11px; font-weight:600; color:var(--dark); font-family:'Noto Sans Devanagari',sans-serif;">खेलकुद</a>
+            <a href="#" style="background:#f0f0f0; padding:5px 12px; font-size:11px; font-weight:600; color:var(--dark);">Tech</a>
+            <a href="#" style="background:#f0f0f0; padding:5px 12px; font-size:11px; font-weight:600; color:var(--dark); font-family:'Noto Sans Devanagari',sans-serif;">स्वास्थ्य</a>
+            <a href="#" style="background:#f0f0f0; padding:5px 12px; font-size:11px; font-weight:600; color:var(--dark);">Sports</a>
+            <a href="#" style="background:#f0f0f0; padding:5px 12px; font-size:11px; font-weight:600; color:var(--dark); font-family:'Noto Sans Devanagari',sans-serif;">विश्व</a>
+            <a href="#" style="background:var(--red); padding:5px 12px; font-size:11px; font-weight:600; color:white;">Breaking</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="logo-main" style="color:var(--red);">Ncell-hi</div>
+      <p>नेपालको विश्वसनीय समाचार स्रोत। ताजा, सही र निष्पक्ष समाचारको लागि Ncell-hi पढ्नुस्।<br>Your trusted source for Nepal news in Nepali and English.</p>
+    </div>
+    <div class="footer-col">
+      <h5>विभाग</h5>
+      <ul>
+        <li><a href="#">राजनीति</a></li>
+        <li><a href="#">अर्थ</a></li>
+        <li><a href="#">खेलकुद</a></li>
+        <li><a href="#">प्रविधि</a></li>
+        <li><a href="#">स्वास्थ्य</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">हाम्रो बारे</a></li>
+        <li><a href="#">Advertise</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Careers</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Follow</h5>
+      <ul>
+        <li><a href="#">Facebook</a></li>
+        <li><a href="#">Twitter / X</a></li>
+        <li><a href="#">YouTube</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">Telegram</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© २०८१ Ncell-hi. सर्वाधिकार सुरक्षित।</span>
+    <span>Privacy Policy • Terms • Sitemap</span>
+  </div>
+</footer>
+
+</body>
+</html>
